@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InternAI – Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="auth-body">
+
+<div class="auth-container">
+
+    <div class="auth-left">
+        <div class="brand-logo">
+            <div class="brand-icon">
+                <i class="fa-solid fa-bolt"></i>
+            </div>
+            <span class="brand-name">InternAI</span>
+        </div>
+        <h2 class="brand-tagline">Land your dream internship with AI</h2>
+        <p class="brand-sub">The smartest way to find, apply, and track internships.</p>
+
+        <ul class="feature-list">
+            <li>
+                <div class="feature-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <div>
+                    <strong>Smart Matching</strong>
+                    <p>AI matches you to internships by your skills</p>
+                </div>
+            </li>
+            <li>
+                <div class="feature-icon"><i class="fa-solid fa-file-lines"></i></div>
+                <div>
+                    <strong>Resume Analyzer</strong>
+                    <p>Get ATS score and improvement tips</p>
+                </div>
+            </li>
+            <li>
+                <div class="feature-icon"><i class="fa-solid fa-envelope"></i></div>
+                <div>
+                    <strong>Cover Letter AI</strong>
+                    <p>Personalized letters in seconds</p>
+                </div>
+            </li>
+            <li>
+                <div class="feature-icon"><i class="fa-solid fa-chart-kanban"></i></div>
+                <div>
+                    <strong>Application Tracker</strong>
+                    <p>Kanban board for all your applications</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="auth-right">
+
+        <div id="loginForm" class="form-card">
+            <h2 class="form-title">Welcome back</h2>
+            <p class="form-subtitle">Sign in to your InternAI account</p>
+
+            <div class="form-group">
+                <label for="loginEmail">Email address</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-envelope input-icon"></i>
+                    <input type="email" id="loginEmail" placeholder="you@college.edu" autocomplete="email">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="loginPassword">
+                    Password
+                    <a href="#" class="forgot-link">Forgot password?</a>
+                </label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-lock input-icon"></i>
+                    <input type="password" id="loginPassword" placeholder="Enter your password">
+                    <button type="button" class="toggle-pw" onclick="togglePassword('loginPassword', this)">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="loginUser()">
+                Sign In
+            </button>
+
+            <div class="divider"><span>or</span></div>
+
+            <button class="btn-demo" onclick="demoLogin()">
+                <i class="fa-solid fa-rocket"></i>
+                Try Demo Account
+            </button>
+
+            <p class="switch-text">
+                Don't have an account?
+                <a href="#" onclick="showRegister()">Sign up free</a>
+            </p>
+        </div>
+
+        
+        <div id="registerForm" class="form-card" style="display:none;">
+            <h2 class="form-title">Create account</h2>
+            <p class="form-subtitle">Start your AI-powered job search</p>
+
+            <div class="form-group">
+                <label for="regName">Full Name</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-user input-icon"></i>
+                    <input type="text" id="regName" placeholder="Your full name">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="regEmail">Email address</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-envelope input-icon"></i>
+                    <input type="email" id="regEmail" placeholder="you@college.edu">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="regPassword">Password</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-lock input-icon"></i>
+                    <input type="password" id="regPassword" placeholder="Min. 8 characters">
+                    <button type="button" class="toggle-pw" onclick="togglePassword('regPassword', this)">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="regConfirm">Confirm Password</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-lock input-icon"></i>
+                    <input type="password" id="regConfirm" placeholder="Re-enter password">
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="registerUser()">Create Account</button>
+
+            <p class="switch-text">
+                Already have an account?
+                <a href="#" onclick="showLogin()">Sign in</a>
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

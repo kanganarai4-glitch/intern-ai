@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InternAI – Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="app-body">
+
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-brand">
+        <div class="sidebar-logo">
+            <i class="fa-solid fa-bolt"></i>
+        </div>
+        <span class="sidebar-brand-name">InternAI</span>
+        <button class="sidebar-collapse-btn" onclick="toggleSidebar()" title="Toggle sidebar">
+            <i class="fa-solid fa-chevron-left" id="collapseIcon"></i>
+        </button>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item active" data-label="Dashboard">
+            <i class="fa-solid fa-chart-line nav-icon"></i>
+            <span class="nav-label">Dashboard</span>
+        </a>
+        <a href="profile.html" class="nav-item" data-label="Profile">
+            <i class="fa-solid fa-user nav-icon"></i>
+            <span class="nav-label">My Profile</span>
+        </a>
+        <a href="resume.html" class="nav-item" data-label="Resume">
+            <i class="fa-solid fa-file-lines nav-icon"></i>
+            <span class="nav-label">Resume Analyzer</span>
+        </a>
+        <a href="internships.html" class="nav-item" data-label="Match">
+            <i class="fa-solid fa-magnifying-glass nav-icon"></i>
+            <span class="nav-label">Internship Matcher</span>
+        </a>
+        <a href="cover-letter.html" class="nav-item" data-label="Cover">
+            <i class="fa-solid fa-envelope nav-icon"></i>
+            <span class="nav-label">Cover Letter</span>
+        </a>
+        <a href="tracker.html" class="nav-item" data-label="Tracker">
+            <i class="fa-solid fa-table-columns nav-icon"></i>
+            <span class="nav-label">App Tracker</span>
+        </a>
+        <a href="interview.html" class="nav-item" data-label="Interview">
+            <i class="fa-solid fa-microphone nav-icon"></i>
+            <span class="nav-label">Interview Prep</span>
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <div class="user-avatar" id="userAvatar">K</div>
+            <div class="user-info">
+                <span class="user-name" id="userName">Kangana</span>
+                <span class="user-role">AIML Student</span>
+            </div>
+        </div>
+        <button class="btn-logout" onclick="logoutUser()">
+            <i class="fa-solid fa-right-from-bracket nav-icon"></i>
+            <span class="nav-label">Logout</span>
+        </button>
+    </div>
+
+</aside>
+
+
+<div class="app-main" id="appMain">
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div>
+                <h1 class="page-title">Dashboard</h1>
+                <p class="page-subtitle">Welcome back, <span id="greetName">Kangana</span></p>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="topbar-date" id="topbarDate"></div>
+            <div class="notif-btn">
+                <i class="fa-solid fa-bell"></i>
+                <span class="notif-badge">3</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-content">
+
+       
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#ede9fe; color:#7c3aed;">
+                    <i class="fa-solid fa-list-check"></i>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-number">12</span>
+                    <span class="stat-label">Applications</span>
+                </div>
+                <span class="stat-badge badge-purple">+2 this week</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#dbeafe; color:#1d4ed8;">
+                    <i class="fa-solid fa-microphone"></i>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Interviews</span>
+                </div>
+                <span class="stat-badge badge-blue">Scheduled</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#dcfce7; color:#15803d;">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-number">1</span>
+                    <span class="stat-label">Offer Received</span>
+                </div>
+                <span class="stat-badge badge-green">Congrats</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#fef9c3; color:#ca8a04;">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-number">78</span>
+                    <span class="stat-label">Resume Score</span>
+                </div>
+                <span class="stat-badge badge-yellow">Improve</span>
+            </div>
+        </div>
+
+        
+        <div class="dashboard-row">
+
+            <div class="card quick-actions-card">
+                <h3 class="card-title">AI Quick Actions</h3>
+                <div class="quick-actions-grid">
+                    <a href="resume.html" class="quick-action-btn">
+                        <i class="fa-solid fa-file-lines qa-icon"></i>
+                        <span>Analyze Resume</span>
+                    </a>
+                    <a href="internships.html" class="quick-action-btn">
+                        <i class="fa-solid fa-magnifying-glass qa-icon"></i>
+                        <span>Find Internships</span>
+                    </a>
+                    <a href="cover-letter.html" class="quick-action-btn">
+                        <i class="fa-solid fa-envelope qa-icon"></i>
+                        <span>Write Cover Letter</span>
+                    </a>
+                    <a href="interview.html" class="quick-action-btn">
+                        <i class="fa-solid fa-microphone qa-icon"></i>
+                        <span>Interview Prep</span>
+                    </a>
+                    <a href="tracker.html" class="quick-action-btn">
+                        <i class="fa-solid fa-table-columns qa-icon"></i>
+                        <span>Track Application</span>
+                    </a>
+                    <a href="profile.html" class="quick-action-btn">
+                        <i class="fa-solid fa-user qa-icon"></i>
+                        <span>Update Profile</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="card recent-apps-card">
+                <div class="card-header">
+                    <h3 class="card-title">Recent Applications</h3>
+                    <a href="tracker.html" class="card-link">View all</a>
+                </div>
+                <div class="app-list">
+                    <div class="app-item">
+                        <div class="app-logo logo-blue">OA</div>
+                        <div class="app-info">
+                            <span class="app-company">OpenAI</span>
+                            <span class="app-role">AI Research Intern</span>
+                        </div>
+                        <span class="status-pill pill-interview">Interview</span>
+                    </div>
+                    <div class="app-item">
+                        <div class="app-logo logo-red">GO</div>
+                        <div class="app-info">
+                            <span class="app-company">Google</span>
+                            <span class="app-role">ML Intern</span>
+                        </div>
+                        <span class="status-pill pill-applied">Applied</span>
+                    </div>
+                    <div class="app-item">
+                        <div class="app-logo logo-teal">MS</div>
+                        <div class="app-info">
+                            <span class="app-company">Microsoft</span>
+                            <span class="app-role">SWE Intern</span>
+                        </div>
+                        <span class="status-pill pill-offer">Offer</span>
+                    </div>
+                    <div class="app-item">
+                        <div class="app-logo logo-orange">AM</div>
+                        <div class="app-info">
+                            <span class="app-company">Amazon</span>
+                            <span class="app-role">Data Science Intern</span>
+                        </div>
+                        <span class="status-pill pill-rejected">Rejected</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="dashboard-row">
+
+            <div class="card matches-card">
+                <div class="card-header">
+                    <h3 class="card-title">Top Matches For You</h3>
+                    <a href="internships.html" class="card-link">See all</a>
+                </div>
+                <div class="match-list">
+                    <div class="match-item">
+                        <div class="match-info">
+                            <span class="match-company">OpenAI</span>
+                            <span class="match-role">AI Engineer Intern</span>
+                        </div>
+                        <div class="match-bar-wrap">
+                            <div class="match-bar" style="width:92%; background:#7c3aed;"></div>
+                        </div>
+                        <span class="match-pct">92%</span>
+                    </div>
+                    <div class="match-item">
+                        <div class="match-info">
+                            <span class="match-company">TCS</span>
+                            <span class="match-role">ML Intern</span>
+                        </div>
+                        <div class="match-bar-wrap">
+                            <div class="match-bar" style="width:88%; background:#2563eb;"></div>
+                        </div>
+                        <span class="match-pct">88%</span>
+                    </div>
+                    <div class="match-item">
+                        <div class="match-info">
+                            <span class="match-company">Infosys</span>
+                            <span class="match-role">Data Science Intern</span>
+                        </div>
+                        <div class="match-bar-wrap">
+                            <div class="match-bar" style="width:83%; background:#0891b2;"></div>
+                        </div>
+                        <span class="match-pct">83%</span>
+                    </div>
+                    <div class="match-item">
+                        <div class="match-info">
+                            <span class="match-company">Wipro</span>
+                            <span class="match-role">Python Developer Intern</span>
+                        </div>
+                        <div class="match-bar-wrap">
+                            <div class="match-bar" style="width:79%; background:#16a34a;"></div>
+                        </div>
+                        <span class="match-pct">79%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card profile-card">
+                <h3 class="card-title" style="align-self:flex-start;">Profile Completion</h3>
+                <div class="profile-progress-circle">
+                    <svg viewBox="0 0 100 100" class="circle-svg">
+                        <circle cx="50" cy="50" r="42" fill="none" stroke="#f1f5f9" stroke-width="10"/>
+                        <circle cx="50" cy="50" r="42" fill="none" stroke="#7c3aed" stroke-width="10"
+                            stroke-dasharray="263.9" stroke-dashoffset="66"
+                            stroke-linecap="round" transform="rotate(-90 50 50)"/>
+                    </svg>
+                    <div class="circle-text">
+                        <span class="circle-pct">75%</span>
+                        <span class="circle-label">Complete</span>
+                    </div>
+                </div>
+                <ul class="profile-checklist">
+                    <li class="check-done">
+                        <i class="fa-solid fa-circle-check"></i> Basic Info
+                    </li>
+                    <li class="check-done">
+                        <i class="fa-solid fa-circle-check"></i> Skills Added
+                    </li>
+                    <li class="check-done">
+                        <i class="fa-solid fa-circle-check"></i> Resume Uploaded
+                    </li>
+                    <li class="check-pending">
+                        <i class="fa-regular fa-circle"></i> Add Projects
+                    </li>
+                    <li class="check-pending">
+                        <i class="fa-regular fa-circle"></i> Set Preferences
+                    </li>
+                </ul>
+                <a href="profile.html" class="btn-complete-profile">Complete Profile</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
