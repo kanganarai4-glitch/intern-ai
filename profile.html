@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InternAI – My Profile</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="profile.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="app-body">
+
+
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <div class="sidebar-logo"><i class="fa-solid fa-bolt"></i></div>
+        <span class="sidebar-brand-name">InternAI</span>
+        <button class="sidebar-collapse-btn" onclick="toggleSidebar()">
+            <i class="fa-solid fa-chevron-left" id="collapseIcon"></i>
+        </button>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item" data-label="Dashboard">
+            <i class="fa-solid fa-chart-line nav-icon"></i>
+            <span class="nav-label">Dashboard</span>
+        </a>
+        <a href="profile.html" class="nav-item active" data-label="Profile">
+            <i class="fa-solid fa-user nav-icon"></i>
+            <span class="nav-label">My Profile</span>
+        </a>
+        <a href="resume.html" class="nav-item" data-label="Resume">
+            <i class="fa-solid fa-file-lines nav-icon"></i>
+            <span class="nav-label">Resume Analyzer</span>
+        </a>
+        <a href="internships.html" class="nav-item" data-label="Match">
+            <i class="fa-solid fa-magnifying-glass nav-icon"></i>
+            <span class="nav-label">Internship Matcher</span>
+        </a>
+        <a href="cover-letter.html" class="nav-item" data-label="Cover">
+            <i class="fa-solid fa-envelope nav-icon"></i>
+            <span class="nav-label">Cover Letter</span>
+        </a>
+        <a href="tracker.html" class="nav-item" data-label="Tracker">
+            <i class="fa-solid fa-table-columns nav-icon"></i>
+            <span class="nav-label">App Tracker</span>
+        </a>
+        <a href="interview.html" class="nav-item" data-label="Interview">
+            <i class="fa-solid fa-microphone nav-icon"></i>
+            <span class="nav-label">Interview Prep</span>
+        </a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <div class="user-avatar" id="userAvatar">K</div>
+            <div class="user-info">
+                <span class="user-name" id="userName">Kangana</span>
+                <span class="user-role">AIML Student</span>
+            </div>
+        </div>
+        <button class="btn-logout" onclick="logoutUser()">
+            <i class="fa-solid fa-right-from-bracket nav-icon"></i>
+            <span class="nav-label">Logout</span>
+        </button>
+    </div>
+</aside>
+
+
+<div class="app-main" id="appMain">
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div>
+                <h1 class="page-title">My Profile</h1>
+                <p class="page-subtitle">Keep your profile updated for better matches</p>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="topbar-date" id="topbarDate"></div>
+            <div class="notif-btn">
+                <i class="fa-solid fa-bell"></i>
+                <span class="notif-badge">3</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-content">
+
+        
+        <div class="profile-header-card">
+            <div class="profile-avatar-wrap">
+                <div class="profile-avatar" id="profileAvatar">K</div>
+                <button class="avatar-edit-btn" onclick="document.getElementById('avatarInput').click()">
+                    <i class="fa-solid fa-camera"></i>
+                </button>
+                <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="handleAvatarUpload(event)">
+            </div>
+            <div class="profile-header-info">
+                <h2 id="headerName">Kangana Rai</h2>
+                <p id="headerCollege">College name will appear here</p>
+                <div class="profile-header-tags">
+                    <span class="header-tag" id="headerDegree">Degree</span>
+                    <span class="header-tag" id="headerRole">Preferred Role</span>
+                    <span class="header-tag" id="headerLocation">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span id="headerLocationText">Location</span>
+                    </span>
+                </div>
+            </div>
+            <div class="profile-completion-wrap">
+                <div class="completion-ring">
+                    <svg viewBox="0 0 80 80">
+                        <circle cx="40" cy="40" r="34" fill="none" stroke="#e2e8f0" stroke-width="8"/>
+                        <circle cx="40" cy="40" r="34" fill="none" stroke="#2563eb" stroke-width="8"
+                            stroke-dasharray="213.6" id="completionCircle"
+                            stroke-dashoffset="160"
+                            stroke-linecap="round" transform="rotate(-90 40 40)"/>
+                    </svg>
+                    <div class="completion-text">
+                        <span id="completionPct">25%</span>
+                        <span>Done</span>
+                    </div>
+                </div>
+                <p class="completion-label">Profile Completion</p>
+            </div>
+        </div>
+
+        
+        <div class="profile-grid">
+
+            
+            <div class="profile-col">
+
+                
+                <div class="card">
+                    <div class="section-header">
+                        <div class="section-icon"><i class="fa-solid fa-user"></i></div>
+                        <h3 class="section-title">Basic Information</h3>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="fullName" placeholder="Your full name" oninput="updateCompletion()">
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="emailAddr" placeholder="you@college.edu" readonly class="input-readonly">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>College / University</label>
+                            <input type="text" id="college" placeholder="e.g. IIT Delhi" oninput="updateCompletion(); updateHeader()">
+                        </div>
+                        <div class="form-group">
+                            <label>Degree</label>
+                            <select id="degree" onchange="updateCompletion(); updateHeader()">
+                                <option value="">Select degree</option>
+                                <option>B.Tech</option>
+                                <option>B.E.</option>
+                                <option>BCA</option>
+                                <option>B.Sc</option>
+                                <option>MCA</option>
+                                <option>M.Tech</option>
+                                <option>MBA</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Branch / Specialization</label>
+                            <input type="text" id="branch" placeholder="e.g. AIML, CSE, Data Science" oninput="updateCompletion()">
+                        </div>
+                        <div class="form-group">
+                            <label>Current Year</label>
+                            <select id="year" onchange="updateCompletion()">
+                                <option value="">Select year</option>
+                                <option>1st Year</option>
+                                <option>2nd Year</option>
+                                <option>3rd Year</option>
+                                <option>4th Year</option>
+                                <option>Graduated</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" id="phone" placeholder="+91 98765 43210" oninput="updateCompletion()">
+                        </div>
+                        <div class="form-group">
+                            <label>LinkedIn Profile</label>
+                            <input type="url" id="linkedin" placeholder="linkedin.com/in/yourname" oninput="updateCompletion()">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>GitHub Profile</label>
+                        <input type="url" id="github" placeholder="github.com/yourname" oninput="updateCompletion()">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Bio / About Me</label>
+                        <textarea id="bio" rows="3" placeholder="Write a short bio about yourself..."></textarea>
+                    </div>
+                </div>
+
+                
+                <div class="card">
+                    <div class="section-header">
+                        <div class="section-icon"><i class="fa-solid fa-sliders"></i></div>
+                        <h3 class="section-title">Job Preferences</h3>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Preferred Role</label>
+                            <select id="prefRole" onchange="updateCompletion(); updateHeader()">
+                                <option value="">Select role</option>
+                                <option>AI Engineer</option>
+                                <option>ML Engineer</option>
+                                <option>Data Scientist</option>
+                                <option>Data Analyst</option>
+                                <option>Software Engineer</option>
+                                <option>Frontend Developer</option>
+                                <option>Backend Developer</option>
+                                <option>Full Stack Developer</option>
+                                <option>DevOps Engineer</option>
+                                <option>Product Manager</option>
+                                <option>UI/UX Designer</option>
+                                <option>Cybersecurity Analyst</option>
+                                <option>Cloud Engineer</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Preferred Location</label>
+                            <select id="prefLocation" onchange="updateCompletion(); updateHeader()">
+                                <option value="">Select location</option>
+                                <option>Remote</option>
+                                <option>Bangalore</option>
+                                <option>Mumbai</option>
+                                <option>Delhi / NCR</option>
+                                <option>Hyderabad</option>
+                                <option>Pune</option>
+                                <option>Chennai</option>
+                                <option>Kolkata</option>
+                                <option>Anywhere in India</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Internship Duration</label>
+                            <select id="duration">
+                                <option value="">Select duration</option>
+                                <option>1 Month</option>
+                                <option>2 Months</option>
+                                <option>3 Months</option>
+                                <option>6 Months</option>
+                                <option>Flexible</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Availability</label>
+                            <select id="availability">
+                                <option value="">Select availability</option>
+                                <option>Immediately</option>
+                                <option>Within 1 Month</option>
+                                <option>Within 3 Months</option>
+                                <option>Summer 2025</option>
+                                <option>Winter 2025</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Expected Stipend (per month)</label>
+                        <select id="stipend">
+                            <option value="">Select range</option>
+                            <option>Unpaid / for experience</option>
+                            <option>Less than Rs 5,000</option>
+                            <option>Rs 5,000 – Rs 10,000</option>
+                            <option>Rs 10,000 – Rs 20,000</option>
+                            <option>Rs 20,000 – Rs 40,000</option>
+                            <option>Above Rs 40,000</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+            
+            <div class="profile-col">
+
+                
+                <div class="card">
+                    <div class="section-header">
+                        <div class="section-icon"><i class="fa-solid fa-code"></i></div>
+                        <h3 class="section-title">Skills</h3>
+                    </div>
+                    <p class="section-hint">Add skills that match your target roles. These are used for internship matching.</p>
+
+                    <div class="skill-input-row">
+                        <input type="text" id="skillInput" placeholder="e.g. Python, React, Machine Learning"
+                            onkeydown="handleSkillKey(event)">
+                        <button class="btn-add-skill" onclick="addSkill()">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+
+                    <div class="skill-suggestions">
+                        <span class="suggestion-label">Suggestions:</span>
+                        <button class="suggestion-chip" onclick="addSkillValue('Python')">Python</button>
+                        <button class="suggestion-chip" onclick="addSkillValue('React')">React</button>
+                        <button class="suggestion-chip" onclick="addSkillValue('Machine Learning')">Machine Learning</button>
+                        <button class="suggestion-chip" onclick="addSkillValue('Node.js')">Node.js</button>
+                        <button class="suggestion-chip" onclick="addSkillValue('SQL')">SQL</button>
+                        <button class="suggestion-chip" onclick="addSkillValue('TensorFlow')">TensorFlow</button>
+                        <button class="suggestion-chip" onclick="addSkillValue('Docker')">Docker</button>
+                        <button class="suggestion-chip" onclick="addSkillValue('AWS')">AWS</button>
+                    </div>
+
+                    <div class="skill-tags" id="skillTags">
+                        
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="section-header">
+                        <div class="section-icon"><i class="fa-solid fa-diagram-project"></i></div>
+                        <h3 class="section-title">Projects</h3>
+                        <button class="btn-add-item" onclick="showAddProject()">
+                            <i class="fa-solid fa-plus"></i> Add Project
+                        </button>
+                    </div>
+                    <p class="section-hint">Showcase your best projects. These strengthen your profile for AI roles.</p>
+
+                    
+                    <div class="add-project-form" id="addProjectForm" style="display:none;">
+                        <div class="form-group">
+                            <label>Project Title</label>
+                            <input type="text" id="projTitle" placeholder="e.g. Sentiment Analysis using BERT">
+                        </div>
+                        <div class="form-group">
+                            <label>Tech Stack Used</label>
+                            <input type="text" id="projTech" placeholder="e.g. Python, TensorFlow, Flask">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="projDesc" rows="2" placeholder="Briefly describe what the project does..."></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>GitHub Link (optional)</label>
+                                <input type="url" id="projGithub" placeholder="github.com/you/project">
+                            </div>
+                            <div class="form-group">
+                                <label>Live Demo (optional)</label>
+                                <input type="url" id="projDemo" placeholder="yourproject.vercel.app">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn-cancel" onclick="hideAddProject()">Cancel</button>
+                            <button class="btn-save-item" onclick="saveProject()">Save Project</button>
+                        </div>
+                    </div>
+
+                    <div class="project-list" id="projectList">
+                        <!-- Project cards render here -->
+                        <div class="empty-state" id="projectEmpty">
+                            <i class="fa-solid fa-folder-open"></i>
+                            <p>No projects added yet. Add your best work!</p>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="card">
+                    <div class="section-header">
+                        <div class="section-icon"><i class="fa-solid fa-certificate"></i></div>
+                        <h3 class="section-title">Certifications</h3>
+                        <button class="btn-add-item" onclick="showAddCert()">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+
+                    <div class="add-cert-form" id="addCertForm" style="display:none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Certificate Name</label>
+                                <input type="text" id="certName" placeholder="e.g. TensorFlow Developer Certificate">
+                            </div>
+                            <div class="form-group">
+                                <label>Issuer</label>
+                                <input type="text" id="certIssuer" placeholder="e.g. Google, Coursera, Udemy">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Year</label>
+                                <input type="text" id="certYear" placeholder="e.g. 2024">
+                            </div>
+                            <div class="form-group">
+                                <label>Certificate Link (optional)</label>
+                                <input type="url" id="certLink" placeholder="credential URL">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn-cancel" onclick="hideCertForm()">Cancel</button>
+                            <button class="btn-save-item" onclick="saveCert()">Save</button>
+                        </div>
+                    </div>
+
+                    <div class="cert-list" id="certList">
+                        <div class="empty-state" id="certEmpty">
+                            <i class="fa-solid fa-award"></i>
+                            <p>No certifications added yet.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        
+        <div class="profile-save-bar">
+            <p class="save-hint">
+                <i class="fa-solid fa-circle-info"></i>
+                Your profile data is saved locally. Once backend is connected, it will sync to the server.
+            </p>
+            <button class="btn-save-profile" onclick="saveProfile()">
+                <i class="fa-solid fa-floppy-disk"></i>
+                Save Profile
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+<script src="profile.js"></script>
+</body>
+</html>

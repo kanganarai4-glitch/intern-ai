@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InternAI – Resume Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="resume.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="app-body">
+
+
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <div class="sidebar-logo"><i class="fa-solid fa-bolt"></i></div>
+        <span class="sidebar-brand-name">InternAI</span>
+        <button class="sidebar-collapse-btn" onclick="toggleSidebar()">
+            <i class="fa-solid fa-chevron-left" id="collapseIcon"></i>
+        </button>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item" data-label="Dashboard">
+            <i class="fa-solid fa-chart-line nav-icon"></i>
+            <span class="nav-label">Dashboard</span>
+        </a>
+        <a href="profile.html" class="nav-item" data-label="Profile">
+            <i class="fa-solid fa-user nav-icon"></i>
+            <span class="nav-label">My Profile</span>
+        </a>
+        <a href="resume.html" class="nav-item active" data-label="Resume">
+            <i class="fa-solid fa-file-lines nav-icon"></i>
+            <span class="nav-label">Resume Analyzer</span>
+        </a>
+        <a href="internships.html" class="nav-item" data-label="Match">
+            <i class="fa-solid fa-magnifying-glass nav-icon"></i>
+            <span class="nav-label">Internship Matcher</span>
+        </a>
+        <a href="cover-letter.html" class="nav-item" data-label="Cover">
+            <i class="fa-solid fa-envelope nav-icon"></i>
+            <span class="nav-label">Cover Letter</span>
+        </a>
+        <a href="tracker.html" class="nav-item" data-label="Tracker">
+            <i class="fa-solid fa-table-columns nav-icon"></i>
+            <span class="nav-label">App Tracker</span>
+        </a>
+        <a href="interview.html" class="nav-item" data-label="Interview">
+            <i class="fa-solid fa-microphone nav-icon"></i>
+            <span class="nav-label">Interview Prep</span>
+        </a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <div class="user-avatar" id="userAvatar">K</div>
+            <div class="user-info">
+                <span class="user-name" id="userName">Kangana</span>
+                <span class="user-role">AIML Student</span>
+            </div>
+        </div>
+        <button class="btn-logout" onclick="logoutUser()">
+            <i class="fa-solid fa-right-from-bracket nav-icon"></i>
+            <span class="nav-label">Logout</span>
+        </button>
+    </div>
+</aside>
+
+
+<div class="app-main" id="appMain">
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div>
+                <h1 class="page-title">Resume Analyzer</h1>
+                <p class="page-subtitle">Upload your resume and get AI-powered feedback</p>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="topbar-date" id="topbarDate"></div>
+            <div class="notif-btn">
+                <i class="fa-solid fa-bell"></i>
+                <span class="notif-badge">3</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-content">
+
+       
+        <div class="steps-bar">
+            <div class="step active" id="step1Indicator">
+                <div class="step-num">1</div>
+                <span>Upload Resume</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" id="step2Indicator">
+                <div class="step-num">2</div>
+                <span>AI Analysis</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" id="step3Indicator">
+                <div class="step-num">3</div>
+                <span>View Results</span>
+            </div>
+        </div>
+
+      
+        <div id="uploadSection">
+            <div class="upload-grid">
+
+                
+                <div class="card upload-card">
+                    <div class="section-header" style="margin-bottom:20px;">
+                        <div class="section-icon-r"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                        <div>
+                            <h3 class="card-title" style="margin-bottom:2px;">Upload Your Resume</h3>
+                            <p style="font-size:13px; color:var(--text-secondary); margin:0;">Supports PDF and DOCX files up to 5MB</p>
+                        </div>
+                    </div>
+
+                    <div class="drop-zone" id="dropZone"
+                        ondragover="handleDragOver(event)"
+                        ondragleave="handleDragLeave(event)"
+                        ondrop="handleDrop(event)"
+                        onclick="document.getElementById('resumeFileInput').click()">
+                        <div class="drop-zone-icon">
+                            <i class="fa-solid fa-file-arrow-up"></i>
+                        </div>
+                        <p class="drop-zone-title">Drag and drop your resume here</p>
+                        <p class="drop-zone-sub">or click to browse files</p>
+                        <div class="drop-zone-formats">
+                            <span class="format-badge">PDF</span>
+                            <span class="format-badge">DOCX</span>
+                        </div>
+                    </div>
+
+                    <input type="file" id="resumeFileInput" accept=".pdf,.docx,.doc" style="display:none" onchange="handleFileSelect(event)">
+
+                    
+                    <div class="file-preview" id="filePreview" style="display:none;">
+                        <div class="file-preview-icon">
+                            <i class="fa-solid fa-file-lines" id="fileTypeIcon"></i>
+                        </div>
+                        <div class="file-preview-info">
+                            <span class="file-name" id="fileName">resume.pdf</span>
+                            <span class="file-size" id="fileSize">0 KB</span>
+                        </div>
+                        <button class="file-remove-btn" onclick="removeFile()">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                    <button class="btn-analyze" id="analyzeBtn" onclick="analyzeResume()" style="display:none;">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        Analyze with AI
+                    </button>
+                </div>
+
+               
+                <div class="tips-col">
+                    <div class="card tips-card">
+                        <div class="section-header" style="margin-bottom:16px;">
+                            <div class="section-icon-r" style="background:#fef9c3; color:#ca8a04;">
+                                <i class="fa-solid fa-lightbulb"></i>
+                            </div>
+                            <h3 class="card-title" style="margin-bottom:0;">Tips for a Better Score</h3>
+                        </div>
+                        <ul class="tips-list">
+                            <li>
+                                <i class="fa-solid fa-circle-check tip-check"></i>
+                                Use a clean, single-column format for ATS compatibility
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-circle-check tip-check"></i>
+                                Include quantifiable achievements with numbers and percentages
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-circle-check tip-check"></i>
+                                Add relevant keywords from your target job descriptions
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-circle-check tip-check"></i>
+                                Keep resume to 1 page for under 2 years of experience
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-circle-check tip-check"></i>
+                                List skills in a dedicated section at the top
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-circle-check tip-check"></i>
+                                Include links to GitHub, LinkedIn, and live projects
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-circle-check tip-check"></i>
+                                Use action verbs: Built, Developed, Designed, Improved
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="card sample-card">
+                        <h3 class="card-title">No resume yet?</h3>
+                        <p style="font-size:13px; color:var(--text-secondary); margin-bottom:14px; line-height:1.6;">
+                            Try our analyzer with a sample resume to see how it works.
+                        </p>
+                        <button class="btn-sample" onclick="useSampleResume()">
+                            <i class="fa-solid fa-play"></i>
+                            Use Sample Resume
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        
+        <div id="analyzingSection" style="display:none;">
+            <div class="card analyzing-card">
+                <div class="analyzing-animation">
+                    <div class="scan-circle">
+                        <i class="fa-solid fa-file-lines scan-file-icon"></i>
+                        <div class="scan-ring ring-1"></div>
+                        <div class="scan-ring ring-2"></div>
+                        <div class="scan-ring ring-3"></div>
+                    </div>
+                </div>
+                <h3 class="analyzing-title">Analyzing your resume...</h3>
+                <p class="analyzing-sub">Our AI is reviewing your resume for ATS score, strengths, weaknesses, and skill gaps.</p>
+                <div class="analyzing-steps" id="analyzingSteps">
+                    <div class="a-step active" id="aStep1">
+                        <i class="fa-solid fa-spinner fa-spin"></i> Parsing resume content
+                    </div>
+                    <div class="a-step" id="aStep2">
+                        <i class="fa-solid fa-circle"></i> Checking ATS compatibility
+                    </div>
+                    <div class="a-step" id="aStep3">
+                        <i class="fa-solid fa-circle"></i> Identifying skill gaps
+                    </div>
+                    <div class="a-step" id="aStep4">
+                        <i class="fa-solid fa-circle"></i> Generating suggestions
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div id="resultsSection" style="display:none;">
+
+            
+            <div class="results-top-row">
+
+                <div class="card score-card">
+                    <h3 class="card-title">ATS Score</h3>
+                    <div class="score-circle-wrap">
+                        <svg viewBox="0 0 140 140" class="score-svg">
+                            <circle cx="70" cy="70" r="58" fill="none" stroke="#f1f5f9" stroke-width="12"/>
+                            <circle cx="70" cy="70" r="58" fill="none" stroke="#2563eb" stroke-width="12"
+                                stroke-dasharray="364.4" id="scoreCircle"
+                                stroke-dashoffset="364.4"
+                                stroke-linecap="round" transform="rotate(-90 70 70)"/>
+                        </svg>
+                        <div class="score-text">
+                            <span class="score-number" id="scoreNumber">0</span>
+                            <span class="score-label">out of 100</span>
+                        </div>
+                    </div>
+                    <div class="score-grade" id="scoreGrade">–</div>
+                    <p class="score-hint" id="scoreHint">–</p>
+                </div>
+
+                
+                <div class="card quick-stats-card">
+                    <h3 class="card-title">Resume Overview</h3>
+                    <div class="quick-stats-grid">
+                        <div class="qs-item">
+                            <span class="qs-val" id="qsWords">–</span>
+                            <span class="qs-label">Words</span>
+                        </div>
+                        <div class="qs-item">
+                            <span class="qs-val" id="qsSkills">–</span>
+                            <span class="qs-label">Skills Found</span>
+                        </div>
+                        <div class="qs-item">
+                            <span class="qs-val" id="qsProjects">–</span>
+                            <span class="qs-label">Projects</span>
+                        </div>
+                        <div class="qs-item">
+                            <span class="qs-val" id="qsKeywords">–</span>
+                            <span class="qs-label">Keywords</span>
+                        </div>
+                    </div>
+                    <div class="section-scores" id="sectionScores"></div>
+                </div>
+
+          
+                <div class="card actions-card">
+                    <h3 class="card-title">Actions</h3>
+                    <div class="result-actions">
+                        <button class="action-btn" onclick="reUpload()">
+                            <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                            Upload New Resume
+                        </button>
+                        <button class="action-btn" onclick="window.location.href='cover-letter.html'">
+                            <i class="fa-solid fa-envelope"></i>
+                            Generate Cover Letter
+                        </button>
+                        <button class="action-btn" onclick="window.location.href='internships.html'">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            Find Matching Internships
+                        </button>
+                        <button class="action-btn action-btn-primary" onclick="downloadReport()">
+                            <i class="fa-solid fa-download"></i>
+                            Download Report
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            
+            <div class="results-bottom-row">
+
+                
+                <div class="card">
+                    <div class="section-header" style="margin-bottom:16px;">
+                        <div class="section-icon-r" style="background:#dcfce7; color:#16a34a;">
+                            <i class="fa-solid fa-thumbs-up"></i>
+                        </div>
+                        <h3 class="card-title" style="margin-bottom:0;">Strengths</h3>
+                    </div>
+                    <ul class="feedback-list" id="strengthsList"></ul>
+                </div>
+
+                
+                <div class="card">
+                    <div class="section-header" style="margin-bottom:16px;">
+                        <div class="section-icon-r" style="background:#fee2e2; color:#dc2626;">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <h3 class="card-title" style="margin-bottom:0;">Areas to Improve</h3>
+                    </div>
+                    <ul class="feedback-list" id="weaknessesList"></ul>
+                </div>
+
+                
+                <div class="card">
+                    <div class="section-header" style="margin-bottom:16px;">
+                        <div class="section-icon-r" style="background:#ede9fe; color:#7c3aed;">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <h3 class="card-title" style="margin-bottom:0;">Suggested Skills to Add</h3>
+                    </div>
+                    <p style="font-size:13px; color:var(--text-secondary); margin-bottom:14px;">
+                        Adding these skills can increase your match rate significantly.
+                    </p>
+                    <div class="suggested-skills" id="suggestedSkills"></div>
+                </div>
+
+            </div>
+
+            
+            <div class="card">
+                <div class="section-header" style="margin-bottom:16px;">
+                    <div class="section-icon-r" style="background:#fef9c3; color:#ca8a04;">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <h3 class="card-title" style="margin-bottom:0;">Actionable Improvement Steps</h3>
+                </div>
+                <div class="improvement-steps" id="improvementSteps"></div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<script src="script.js"></script>
+<script src="resume.js"></script>
+</body>
+</html>
