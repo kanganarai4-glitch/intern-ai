@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InternAI – Cover Letter Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cover-letter.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="app-body">
+
+
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <div class="sidebar-logo"><i class="fa-solid fa-bolt"></i></div>
+        <span class="sidebar-brand-name">InternAI</span>
+        <button class="sidebar-collapse-btn" onclick="toggleSidebar()">
+            <i class="fa-solid fa-chevron-left" id="collapseIcon"></i>
+        </button>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item" data-label="Dashboard">
+            <i class="fa-solid fa-chart-line nav-icon"></i>
+            <span class="nav-label">Dashboard</span>
+        </a>
+        <a href="profile.html" class="nav-item" data-label="Profile">
+            <i class="fa-solid fa-user nav-icon"></i>
+            <span class="nav-label">My Profile</span>
+        </a>
+        <a href="resume.html" class="nav-item" data-label="Resume">
+            <i class="fa-solid fa-file-lines nav-icon"></i>
+            <span class="nav-label">Resume Analyzer</span>
+        </a>
+        <a href="internships.html" class="nav-item" data-label="Match">
+            <i class="fa-solid fa-magnifying-glass nav-icon"></i>
+            <span class="nav-label">Internship Matcher</span>
+        </a>
+        <a href="cover-letter.html" class="nav-item active" data-label="Cover">
+            <i class="fa-solid fa-envelope nav-icon"></i>
+            <span class="nav-label">Cover Letter</span>
+        </a>
+        <a href="tracker.html" class="nav-item" data-label="Tracker">
+            <i class="fa-solid fa-table-columns nav-icon"></i>
+            <span class="nav-label">App Tracker</span>
+        </a>
+        <a href="interview.html" class="nav-item" data-label="Interview">
+            <i class="fa-solid fa-microphone nav-icon"></i>
+            <span class="nav-label">Interview Prep</span>
+        </a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <div class="user-avatar" id="userAvatar">K</div>
+            <div class="user-info">
+                <span class="user-name" id="userName">Kangana</span>
+                <span class="user-role">AIML Student</span>
+            </div>
+        </div>
+        <button class="btn-logout" onclick="logoutUser()">
+            <i class="fa-solid fa-right-from-bracket nav-icon"></i>
+            <span class="nav-label">Logout</span>
+        </button>
+    </div>
+</aside>
+
+
+<div class="app-main" id="appMain">
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div>
+                <h1 class="page-title">Cover Letter Generator</h1>
+                <p class="page-subtitle">Generate a personalized cover letter with AI in seconds</p>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="topbar-date" id="topbarDate"></div>
+            <div class="notif-btn">
+                <i class="fa-solid fa-bell"></i>
+                <span class="notif-badge">3</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-content">
+
+        <div class="cl-layout">
+
+           
+            <div class="cl-left">
+                <div class="card">
+                    <div class="section-header" style="margin-bottom:20px;">
+                        <div class="cl-section-icon">
+                            <i class="fa-solid fa-sliders"></i>
+                        </div>
+                        <div>
+                            <h3 class="card-title" style="margin-bottom:2px;">Letter Details</h3>
+                            <p style="font-size:13px; color:var(--text-secondary); margin:0;">Fill in the details to personalize your letter</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Company Name</label>
+                        <div class="cl-input-wrap">
+                            <i class="fa-solid fa-building cl-input-icon"></i>
+                            <input type="text" id="clCompany" placeholder="e.g. Google, OpenAI, TCS"
+                                oninput="updatePreviewHeader()">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Role / Position</label>
+                        <div class="cl-input-wrap">
+                            <i class="fa-solid fa-briefcase cl-input-icon"></i>
+                            <input type="text" id="clRole" placeholder="e.g. AI Engineer Intern, ML Intern"
+                                oninput="updatePreviewHeader()">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hiring Manager Name <span class="optional-label">(optional)</span></label>
+                        <div class="cl-input-wrap">
+                            <i class="fa-solid fa-user cl-input-icon"></i>
+                            <input type="text" id="clManager" placeholder="e.g. Mr. Rahul Sharma">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Your Key Skills <span class="optional-label">(auto-loaded from profile)</span></label>
+                        <div class="cl-input-wrap">
+                            <i class="fa-solid fa-code cl-input-icon"></i>
+                            <input type="text" id="clSkills" placeholder="e.g. Python, Machine Learning, React">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Your Top Project <span class="optional-label">(optional)</span></label>
+                        <div class="cl-input-wrap">
+                            <i class="fa-solid fa-diagram-project cl-input-icon"></i>
+                            <input type="text" id="clProject" placeholder="e.g. Sentiment Analysis using BERT">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tone of Letter</label>
+                        <div class="tone-options">
+                            <label class="tone-option">
+                                <input type="radio" name="tone" value="professional" checked>
+                                <span class="tone-label">Professional</span>
+                            </label>
+                            <label class="tone-option">
+                                <input type="radio" name="tone" value="enthusiastic">
+                                <span class="tone-label">Enthusiastic</span>
+                            </label>
+                            <label class="tone-option">
+                                <input type="radio" name="tone" value="concise">
+                                <span class="tone-label">Concise</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Additional Notes <span class="optional-label">(optional)</span></label>
+                        <textarea id="clNotes" rows="3"
+                            placeholder="Anything specific to mention? e.g. referral name, specific project at the company, why you admire them..."></textarea>
+                    </div>
+
+                    <button class="btn-generate" id="generateBtn" onclick="generateLetter()">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        Generate Cover Letter
+                    </button>
+
+                   
+                    <div class="saved-letters" id="savedLetters" style="display:none;">
+                        <h4 class="saved-letters-title">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                            Previously Generated
+                        </h4>
+                        <div id="savedLettersList"></div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="cl-right">
+                <div class="card cl-preview-card">
+
+                    
+                    <div class="preview-toolbar">
+                        <div class="preview-toolbar-left">
+                            <i class="fa-solid fa-file-lines"></i>
+                            <span id="previewTitle">Cover Letter Preview</span>
+                        </div>
+                        <div class="preview-toolbar-right" id="previewActions" style="display:none;">
+                            <button class="preview-action-btn" onclick="copyLetter()" title="Copy">
+                                <i class="fa-solid fa-copy"></i>
+                                <span>Copy</span>
+                            </button>
+                            <button class="preview-action-btn" onclick="downloadLetter()" title="Download">
+                                <i class="fa-solid fa-download"></i>
+                                <span>Download</span>
+                            </button>
+                            <button class="preview-action-btn" onclick="saveLetter()" title="Save">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                <span>Save</span>
+                            </button>
+                            <button class="preview-action-btn" onclick="regenerateLetter()" title="Regenerate">
+                                <i class="fa-solid fa-rotate"></i>
+                                <span>Regenerate</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    
+                    <div class="preview-empty" id="previewEmpty">
+                        <div class="preview-empty-icon">
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                        </div>
+                        <h3>Your cover letter will appear here</h3>
+                        <p>Fill in the details on the left and click Generate to create a personalized AI cover letter.</p>
+                    </div>
+
+                    
+                    <div class="preview-generating" id="previewGenerating" style="display:none;">
+                        <div class="typing-indicator">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                        <p class="generating-text">AI is writing your cover letter...</p>
+                    </div>
+
+                    
+                    <div class="letter-paper" id="letterPaper" style="display:none;">
+                        <div class="letter-header">
+                            <div class="letter-sender" id="letterSenderName">Your Name</div>
+                            <div class="letter-sender-info" id="letterSenderInfo"></div>
+                            <div class="letter-date" id="letterDate"></div>
+                        </div>
+                        <div class="letter-recipient" id="letterRecipient"></div>
+                        <div class="letter-body" id="letterBody"></div>
+                        <div class="letter-signature" id="letterSignature"></div>
+                    </div>
+
+                </div>
+
+                
+                <div class="card cl-tips-card">
+                    <h4 class="cl-tips-title">
+                        <i class="fa-solid fa-lightbulb" style="color:#ca8a04;"></i>
+                        Cover Letter Tips
+                    </h4>
+                    <ul class="cl-tips-list">
+                        <li>Keep it to one page — 3 to 4 paragraphs is ideal</li>
+                        <li>Mention the specific role and company name clearly</li>
+                        <li>Highlight 2 to 3 relevant skills with brief context</li>
+                        <li>Show enthusiasm for the company, not just any job</li>
+                        <li>End with a clear call to action for an interview</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<script src="script.js"></script>
+<script src="cover-letter.js"></script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InternAI – Internship Matcher</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="internships.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="app-body">
+
+
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <div class="sidebar-logo"><i class="fa-solid fa-bolt"></i></div>
+        <span class="sidebar-brand-name">InternAI</span>
+        <button class="sidebar-collapse-btn" onclick="toggleSidebar()">
+            <i class="fa-solid fa-chevron-left" id="collapseIcon"></i>
+        </button>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item" data-label="Dashboard">
+            <i class="fa-solid fa-chart-line nav-icon"></i>
+            <span class="nav-label">Dashboard</span>
+        </a>
+        <a href="profile.html" class="nav-item" data-label="Profile">
+            <i class="fa-solid fa-user nav-icon"></i>
+            <span class="nav-label">My Profile</span>
+        </a>
+        <a href="resume.html" class="nav-item" data-label="Resume">
+            <i class="fa-solid fa-file-lines nav-icon"></i>
+            <span class="nav-label">Resume Analyzer</span>
+        </a>
+        <a href="internships.html" class="nav-item active" data-label="Match">
+            <i class="fa-solid fa-magnifying-glass nav-icon"></i>
+            <span class="nav-label">Internship Matcher</span>
+        </a>
+        <a href="cover-letter.html" class="nav-item" data-label="Cover">
+            <i class="fa-solid fa-envelope nav-icon"></i>
+            <span class="nav-label">Cover Letter</span>
+        </a>
+        <a href="tracker.html" class="nav-item" data-label="Tracker">
+            <i class="fa-solid fa-table-columns nav-icon"></i>
+            <span class="nav-label">App Tracker</span>
+        </a>
+        <a href="interview.html" class="nav-item" data-label="Interview">
+            <i class="fa-solid fa-microphone nav-icon"></i>
+            <span class="nav-label">Interview Prep</span>
+        </a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <div class="user-avatar" id="userAvatar">K</div>
+            <div class="user-info">
+                <span class="user-name" id="userName">Kangana</span>
+                <span class="user-role">AIML Student</span>
+            </div>
+        </div>
+        <button class="btn-logout" onclick="logoutUser()">
+            <i class="fa-solid fa-right-from-bracket nav-icon"></i>
+            <span class="nav-label">Logout</span>
+        </button>
+    </div>
+</aside>
+
+
+<div class="app-main" id="appMain">
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div>
+                <h1 class="page-title">Internship Matcher</h1>
+                <p class="page-subtitle">AI matches you to internships based on your skills</p>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="topbar-date" id="topbarDate"></div>
+            <div class="notif-btn">
+                <i class="fa-solid fa-bell"></i>
+                <span class="notif-badge">3</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-content">
+
+        
+        <div class="card filter-card">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label>Your Skills</label>
+                    <div class="skills-input-wrap">
+                        <i class="fa-solid fa-code filter-icon"></i>
+                        <input type="text" id="skillsInput" placeholder="e.g. Python, React, Machine Learning"
+                            onkeydown="if(event.key==='Enter') runMatch()">
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label>Preferred Role</label>
+                    <div class="skills-input-wrap">
+                        <i class="fa-solid fa-briefcase filter-icon"></i>
+                        <select id="roleFilter">
+                            <option value="">All Roles</option>
+                            <option>AI Engineer</option>
+                            <option>ML Engineer</option>
+                            <option>Data Scientist</option>
+                            <option>Data Analyst</option>
+                            <option>Software Engineer</option>
+                            <option>Frontend Developer</option>
+                            <option>Backend Developer</option>
+                            <option>Full Stack Developer</option>
+                            <option>DevOps Engineer</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label>Location</label>
+                    <div class="skills-input-wrap">
+                        <i class="fa-solid fa-location-dot filter-icon"></i>
+                        <select id="locationFilter">
+                            <option value="">All Locations</option>
+                            <option>Remote</option>
+                            <option>Bangalore</option>
+                            <option>Mumbai</option>
+                            <option>Delhi / NCR</option>
+                            <option>Hyderabad</option>
+                            <option>Pune</option>
+                            <option>Chennai</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label>Stipend</label>
+                    <div class="skills-input-wrap">
+                        <i class="fa-solid fa-indian-rupee-sign filter-icon"></i>
+                        <select id="stipendFilter">
+                            <option value="">Any Stipend</option>
+                            <option>Unpaid</option>
+                            <option>Under 10k</option>
+                            <option>10k - 20k</option>
+                            <option>20k - 40k</option>
+                            <option>Above 40k</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn-match" onclick="runMatch()">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    Find Matches
+                </button>
+            </div>
+
+            
+            <div class="active-skills" id="activeSkills" style="display:none;">
+                <span class="active-skills-label">Matching for:</span>
+                <div id="activeSkillTags"></div>
+                <button class="clear-skills-btn" onclick="clearSkills()">
+                    <i class="fa-solid fa-xmark"></i> Clear
+                </button>
+            </div>
+        </div>
+
+       
+        <div id="matchResults">
+
+        
+            <div class="default-state" id="defaultState">
+                <div class="card default-state-card">
+                    <div class="default-icon">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <h3>Find Your Best Internship Matches</h3>
+                    <p>Enter your skills above or load them from your saved profile to get AI-powered internship recommendations.</p>
+                    <button class="btn-load-profile" onclick="loadFromProfile()">
+                        <i class="fa-solid fa-user"></i>
+                        Load Skills from My Profile
+                    </button>
+                </div>
+            </div>
+
+            
+            <div id="matchLoading" style="display:none;">
+                <div class="card match-loading-card">
+                    <div class="match-loading-anim">
+                        <div class="ml-dot dot1"></div>
+                        <div class="ml-dot dot2"></div>
+                        <div class="ml-dot dot3"></div>
+                    </div>
+                    <p class="match-loading-text">AI is finding your best matches...</p>
+                </div>
+            </div>
+
+            
+            <div id="matchResultsList" style="display:none;">
+                <div class="results-header">
+                    <div>
+                        <h3 class="results-title" id="resultsTitle">Top Matches</h3>
+                        <p class="results-sub" id="resultsSub"></p>
+                    </div>
+                    <div class="sort-wrap">
+                        <label>Sort by</label>
+                        <select id="sortBy" onchange="sortResults()">
+                            <option value="match">Match %</option>
+                            <option value="stipend">Stipend</option>
+                            <option value="company">Company</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="internship-grid" id="internshipGrid"></div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<script src="script.js"></script>
+<script src="internships.js"></script>
+</body>
+</html>
