@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InternAI – Application Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="tracker.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="app-body">
+
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <div class="sidebar-logo"><i class="fa-solid fa-bolt"></i></div>
+        <span class="sidebar-brand-name">InternAI</span>
+        <button class="sidebar-collapse-btn" onclick="toggleSidebar()">
+            <i class="fa-solid fa-chevron-left" id="collapseIcon"></i>
+        </button>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item" data-label="Dashboard"><i class="fa-solid fa-chart-line nav-icon"></i><span class="nav-label">Dashboard</span></a>
+        <a href="profile.html" class="nav-item" data-label="Profile"><i class="fa-solid fa-user nav-icon"></i><span class="nav-label">My Profile</span></a>
+        <a href="resume.html" class="nav-item" data-label="Resume"><i class="fa-solid fa-file-lines nav-icon"></i><span class="nav-label">Resume Analyzer</span></a>
+        <a href="internships.html" class="nav-item" data-label="Match"><i class="fa-solid fa-magnifying-glass nav-icon"></i><span class="nav-label">Internship Matcher</span></a>
+        <a href="cover-letter.html" class="nav-item" data-label="Cover"><i class="fa-solid fa-envelope nav-icon"></i><span class="nav-label">Cover Letter</span></a>
+        <a href="tracker.html" class="nav-item active" data-label="Tracker"><i class="fa-solid fa-table-columns nav-icon"></i><span class="nav-label">App Tracker</span></a>
+        <a href="interview.html" class="nav-item" data-label="Interview"><i class="fa-solid fa-microphone nav-icon"></i><span class="nav-label">Interview Prep</span></a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <div class="user-avatar" id="userAvatar">K</div>
+            <div class="user-info">
+                <span class="user-name" id="userName">Kangana</span>
+                <span class="user-role">AIML Student</span>
+            </div>
+        </div>
+        <button class="btn-logout" onclick="logoutUser()">
+            <i class="fa-solid fa-right-from-bracket nav-icon"></i>
+            <span class="nav-label">Logout</span>
+        </button>
+    </div>
+</aside>
+
+<div class="app-main" id="appMain">
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+            <div>
+                <h1 class="page-title">Application Tracker</h1>
+                <p class="page-subtitle">Track every internship application in one place</p>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="topbar-date" id="topbarDate"></div>
+            <button class="btn-add-app" onclick="openAddModal()">
+                <i class="fa-solid fa-plus"></i> Add Application
+            </button>
+        </div>
+    </header>
+
+    <div class="page-content">
+
+       
+        <div class="tracker-summary">
+            <div class="summary-item">
+                <span class="summary-num" id="totalCount">0</span>
+                <span class="summary-label">Total</span>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-item">
+                <span class="summary-num applied-color" id="appliedCount">0</span>
+                <span class="summary-label">Applied</span>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-item">
+                <span class="summary-num interview-color" id="interviewCount">0</span>
+                <span class="summary-label">Interview</span>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-item">
+                <span class="summary-num offer-color" id="offerCount">0</span>
+                <span class="summary-label">Offers</span>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-item">
+                <span class="summary-num rejected-color" id="rejectedCount">0</span>
+                <span class="summary-label">Rejected</span>
+            </div>
+        </div>
+
+       
+        <div class="kanban-board">
+
+            <div class="kanban-col" id="col-applied" ondragover="allowDrop(event)" ondrop="drop(event, 'applied')">
+                <div class="col-header applied-header">
+                    <div class="col-title-wrap">
+                        <span class="col-dot applied-dot"></span>
+                        <span class="col-title">Applied</span>
+                        <span class="col-count" id="badge-applied">0</span>
+                    </div>
+                    <button class="col-add-btn" onclick="openAddModal('applied')" title="Add">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+                <div class="kanban-cards" id="cards-applied"></div>
+            </div>
+
+            <div class="kanban-col" id="col-interview" ondragover="allowDrop(event)" ondrop="drop(event, 'interview')">
+                <div class="col-header interview-header">
+                    <div class="col-title-wrap">
+                        <span class="col-dot interview-dot"></span>
+                        <span class="col-title">Interview</span>
+                        <span class="col-count" id="badge-interview">0</span>
+                    </div>
+                    <button class="col-add-btn" onclick="openAddModal('interview')" title="Add">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+                <div class="kanban-cards" id="cards-interview"></div>
+            </div>
+
+            <div class="kanban-col" id="col-offer" ondragover="allowDrop(event)" ondrop="drop(event, 'offer')">
+                <div class="col-header offer-header">
+                    <div class="col-title-wrap">
+                        <span class="col-dot offer-dot"></span>
+                        <span class="col-title">Offer</span>
+                        <span class="col-count" id="badge-offer">0</span>
+                    </div>
+                    <button class="col-add-btn" onclick="openAddModal('offer')" title="Add">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+                <div class="kanban-cards" id="cards-offer"></div>
+            </div>
+
+            <div class="kanban-col" id="col-rejected" ondragover="allowDrop(event)" ondrop="drop(event, 'rejected')">
+                <div class="col-header rejected-header">
+                    <div class="col-title-wrap">
+                        <span class="col-dot rejected-dot"></span>
+                        <span class="col-title">Rejected</span>
+                        <span class="col-count" id="badge-rejected">0</span>
+                    </div>
+                    <button class="col-add-btn" onclick="openAddModal('rejected')" title="Add">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+                <div class="kanban-cards" id="cards-rejected"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal-overlay" id="addModal" style="display:none;" onclick="closeModalOutside(event)">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 class="modal-title">Add Application</h3>
+            <button class="modal-close" onclick="closeAddModal()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-row-2">
+                <div class="form-group">
+                    <label>Company Name</label>
+                    <input type="text" id="modalCompany" placeholder="e.g. Google">
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <input type="text" id="modalRole" placeholder="e.g. ML Intern">
+                </div>
+            </div>
+            <div class="form-row-2">
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="modalLocation" placeholder="e.g. Bangalore / Remote">
+                </div>
+                <div class="form-group">
+                    <label>Stipend (optional)</label>
+                    <input type="text" id="modalStipend" placeholder="e.g. Rs 25,000/month">
+                </div>
+            </div>
+            <div class="form-row-2">
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="modalStatus">
+                        <option value="applied">Applied</option>
+                        <option value="interview">Interview</option>
+                        <option value="offer">Offer</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Applied Date</label>
+                    <input type="date" id="modalDate">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Notes (optional)</label>
+                <textarea id="modalNotes" rows="2" placeholder="e.g. Referral from alumni, interview on 15th Jan..."></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-modal-cancel" onclick="closeAddModal()">Cancel</button>
+            <button class="btn-modal-save" onclick="saveApplication()">
+                <i class="fa-solid fa-plus"></i> Add Application
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal-overlay" id="editModal" style="display:none;" onclick="closeEditOutside(event)">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 class="modal-title">Edit Application</h3>
+            <button class="modal-close" onclick="closeEditModal()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="editId">
+            <div class="form-row-2">
+                <div class="form-group">
+                    <label>Company Name</label>
+                    <input type="text" id="editCompany">
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <input type="text" id="editRole">
+                </div>
+            </div>
+            <div class="form-row-2">
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="editLocation">
+                </div>
+                <div class="form-group">
+                    <label>Stipend</label>
+                    <input type="text" id="editStipend">
+                </div>
+            </div>
+            <div class="form-row-2">
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="editStatus">
+                        <option value="applied">Applied</option>
+                        <option value="interview">Interview</option>
+                        <option value="offer">Offer</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Applied Date</label>
+                    <input type="date" id="editDate">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Notes</label>
+                <textarea id="editNotes" rows="2"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-modal-cancel" onclick="closeEditModal()">Cancel</button>
+            <button class="btn-modal-save" onclick="updateApplication()">
+                <i class="fa-solid fa-floppy-disk"></i> Save Changes
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<script src="script.js"></script>
+<script src="tracker.js"></script>
+</body>
+</html>

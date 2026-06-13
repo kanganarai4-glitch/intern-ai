@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InternAI – Interview Prep</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="interview.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="app-body">
+
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <div class="sidebar-logo"><i class="fa-solid fa-bolt"></i></div>
+        <span class="sidebar-brand-name">InternAI</span>
+        <button class="sidebar-collapse-btn" onclick="toggleSidebar()">
+            <i class="fa-solid fa-chevron-left" id="collapseIcon"></i>
+        </button>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item" data-label="Dashboard"><i class="fa-solid fa-chart-line nav-icon"></i><span class="nav-label">Dashboard</span></a>
+        <a href="profile.html" class="nav-item" data-label="Profile"><i class="fa-solid fa-user nav-icon"></i><span class="nav-label">My Profile</span></a>
+        <a href="resume.html" class="nav-item" data-label="Resume"><i class="fa-solid fa-file-lines nav-icon"></i><span class="nav-label">Resume Analyzer</span></a>
+        <a href="internships.html" class="nav-item" data-label="Match"><i class="fa-solid fa-magnifying-glass nav-icon"></i><span class="nav-label">Internship Matcher</span></a>
+        <a href="cover-letter.html" class="nav-item" data-label="Cover"><i class="fa-solid fa-envelope nav-icon"></i><span class="nav-label">Cover Letter</span></a>
+        <a href="tracker.html" class="nav-item" data-label="Tracker"><i class="fa-solid fa-table-columns nav-icon"></i><span class="nav-label">App Tracker</span></a>
+        <a href="interview.html" class="nav-item active" data-label="Interview"><i class="fa-solid fa-microphone nav-icon"></i><span class="nav-label">Interview Prep</span></a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <div class="user-avatar" id="userAvatar">K</div>
+            <div class="user-info">
+                <span class="user-name" id="userName">Kangana</span>
+                <span class="user-role">AIML Student</span>
+            </div>
+        </div>
+        <button class="btn-logout" onclick="logoutUser()">
+            <i class="fa-solid fa-right-from-bracket nav-icon"></i>
+            <span class="nav-label">Logout</span>
+        </button>
+    </div>
+</aside>
+
+<div class="app-main" id="appMain">
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+            <div>
+                <h1 class="page-title">Interview Prep</h1>
+                <p class="page-subtitle">Practice with AI-generated interview questions</p>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="topbar-date" id="topbarDate"></div>
+            <div class="notif-btn">
+                <i class="fa-solid fa-bell"></i>
+                <span class="notif-badge">3</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-content">
+
+        
+        <div class="card config-card">
+            <div class="config-row">
+                <div class="config-group">
+                    <label>Target Role</label>
+                    <div class="config-input-wrap">
+                        <i class="fa-solid fa-briefcase config-icon"></i>
+                        <input type="text" id="targetRole" placeholder="e.g. AI Engineer Intern, ML Intern">
+                    </div>
+                </div>
+                <div class="config-group">
+                    <label>Company (optional)</label>
+                    <div class="config-input-wrap">
+                        <i class="fa-solid fa-building config-icon"></i>
+                        <input type="text" id="targetCompany" placeholder="e.g. Google, OpenAI">
+                    </div>
+                </div>
+                <div class="config-group">
+                    <label>Question Type</label>
+                    <div class="config-input-wrap">
+                        <i class="fa-solid fa-list config-icon"></i>
+                        <select id="questionType">
+                            <option value="all">All Questions</option>
+                            <option value="hr">HR Questions Only</option>
+                            <option value="technical">Technical Only</option>
+                            <option value="behavioral">Behavioral Only</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="config-group">
+                    <label>Difficulty</label>
+                    <div class="config-input-wrap">
+                        <i class="fa-solid fa-gauge config-icon"></i>
+                        <select id="difficulty">
+                            <option value="easy">Easy</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="hard">Hard</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn-generate-q" onclick="generateQuestions()">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    Generate Questions
+                </button>
+            </div>
+        </div>
+
+        
+        <div class="interview-layout">
+
+            
+            <div class="questions-panel">
+
+                
+                <div class="card q-default-state" id="qDefaultState">
+                    <div class="q-default-icon"><i class="fa-solid fa-microphone"></i></div>
+                    <h3>Ready to Practice?</h3>
+                    <p>Enter your target role above and click Generate to get a personalized set of interview questions.</p>
+                    <button class="btn-quick-start" onclick="quickStart()">
+                        <i class="fa-solid fa-bolt"></i>
+                        Quick Start with AI Engineer Questions
+                    </button>
+                </div>
+
+                
+                <div class="card q-loading" id="qLoading" style="display:none;">
+                    <div class="q-loading-anim">
+                        <div class="ml-dot dot1"></div>
+                        <div class="ml-dot dot2"></div>
+                        <div class="ml-dot dot3"></div>
+                    </div>
+                    <p>Generating questions for you...</p>
+                </div>
+
+                
+                <div id="questionsList" style="display:none;">
+                    <div class="questions-header">
+                        <div>
+                            <h3 class="q-list-title" id="qListTitle">Interview Questions</h3>
+                            <p class="q-list-sub" id="qListSub"></p>
+                        </div>
+                        <div class="q-header-actions">
+                            <button class="q-action-btn" onclick="generateQuestions()" title="Regenerate">
+                                <i class="fa-solid fa-rotate"></i>
+                            </button>
+                            <button class="q-action-btn" onclick="shuffleQuestions()" title="Shuffle">
+                                <i class="fa-solid fa-shuffle"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    
+                    <div class="q-tabs">
+                        <button class="q-tab active" onclick="filterTab('all', this)">All</button>
+                        <button class="q-tab" onclick="filterTab('hr', this)">HR</button>
+                        <button class="q-tab" onclick="filterTab('technical', this)">Technical</button>
+                        <button class="q-tab" onclick="filterTab('behavioral', this)">Behavioral</button>
+                    </div>
+
+                    <div id="questionsContainer"></div>
+                </div>
+
+            </div>
+
+            
+            <div class="practice-panel">
+
+                
+                <div class="card practice-idle" id="practiceIdle">
+                    <div class="practice-idle-icon"><i class="fa-solid fa-comment-dots"></i></div>
+                    <h3>Practice Mode</h3>
+                    <p>Click on any question on the left to start practicing your answer with a timer.</p>
+                </div>
+
+                
+                <div class="card practice-active" id="practiceActive" style="display:none;">
+                    <div class="practice-header">
+                        <div class="practice-category" id="practiceCategory">HR</div>
+                        <div class="practice-difficulty" id="practiceDifficulty">Medium</div>
+                    </div>
+
+                    <div class="practice-question" id="practiceQuestion">
+                        Click a question to start practicing
+                    </div>
+
+                    <div class="timer-section">
+                        <div class="timer-display" id="timerDisplay">02:00</div>
+                        <div class="timer-controls">
+                            <button class="timer-btn" id="timerStartBtn" onclick="startTimer()">
+                                <i class="fa-solid fa-play"></i> Start Timer
+                            </button>
+                            <button class="timer-btn timer-btn-reset" onclick="resetTimer()">
+                                <i class="fa-solid fa-rotate-left"></i> Reset
+                            </button>
+                        </div>
+                        <div class="timer-bar-wrap">
+                            <div class="timer-bar" id="timerBar"></div>
+                        </div>
+                    </div>
+
+                    <div class="answer-section">
+                        <label class="answer-label">Your Answer Notes</label>
+                        <textarea id="answerNotes" rows="5"
+                            placeholder="Type your answer notes here to review later..."></textarea>
+                    </div>
+
+                    <div class="hint-section" id="hintSection" style="display:none;">
+                        <div class="hint-header">
+                            <i class="fa-solid fa-lightbulb"></i>
+                            <span>Answer Hint</span>
+                        </div>
+                        <p class="hint-text" id="hintText"></p>
+                    </div>
+
+                    <div class="practice-actions">
+                        <button class="btn-hint" onclick="showHint()">
+                            <i class="fa-solid fa-lightbulb"></i> Show Hint
+                        </button>
+                        <button class="btn-mark-done" onclick="markDone()">
+                            <i class="fa-solid fa-circle-check"></i> Mark Done
+                        </button>
+                        <button class="btn-next-q" onclick="nextQuestion()">
+                            Next Question <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                
+                <div class="card progress-card" id="progressCard" style="display:none;">
+                    <h4 class="progress-title">Session Progress</h4>
+                    <div class="progress-stats">
+                        <div class="prog-stat">
+                            <span class="prog-num" id="progDone">0</span>
+                            <span class="prog-label">Practiced</span>
+                        </div>
+                        <div class="prog-stat">
+                            <span class="prog-num" id="progTotal">0</span>
+                            <span class="prog-label">Total</span>
+                        </div>
+                        <div class="prog-stat">
+                            <span class="prog-num" id="progPct">0%</span>
+                            <span class="prog-label">Complete</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar-wrap">
+                        <div class="progress-bar-fill" id="progressBarFill"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<script src="script.js"></script>
+<script src="interview.js"></script>
+</body>
+</html>
