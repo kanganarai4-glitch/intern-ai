@@ -1,27 +1,18 @@
-const jwt  = require('jsonwebtoken');
-const User = require('../models/User');
+const express = require('express');
+const router  = express.Router();
+const { register, login, demoLogin, getMe } = require('../controllers/authController');
+const { protect } = require('../middleware/auth');
 
-const protect = async (req, res, next) => {
-    let token;
+// POST /api/auth/register
+router.post('/register', register);
 
-    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-        token = req.headers.authorization.split(' ')[1];
-    }
+// POST /api/auth/login
+router.post('/login', login);
 
-    if (!token) {
-        return res.status(401).json({ success: false, message: 'Not authorized, no token' });
-    }
+// POST /api/auth/demo
+router.post('/demo', demoLogin);
 
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = await User.findById(decoded.id).select('-password');
-        if (!req.user) {
-            return res.status(401).json({ success: false, message: 'User not found' });
-        }
-        next();
-    } catch (err) {
-        return res.status(401).json({ success: false, message: 'Token invalid or expired' });
-    }
-};
+// GET /api/auth/me  (protected)
+router.get('/me', protect, getMe);
 
-module.exports = { protect };
+module.exports = router;
