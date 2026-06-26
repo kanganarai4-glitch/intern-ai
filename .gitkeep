@@ -1,0 +1,2 @@
+This folder is intentionally kept and must exist for file uploads to work.
+Uploaded files are excluded from git via .gitignore.
